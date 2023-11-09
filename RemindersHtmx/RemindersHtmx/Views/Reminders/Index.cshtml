@@ -13,6 +13,9 @@
     <thead>
         <tr>
             <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.DateCreated)
             </th>
             <th>
@@ -37,6 +40,9 @@
 @foreach (var item in Model) {
         <tr>
             <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.DateCreated)
             </td>
             <td>
@@ -55,9 +61,9 @@
                 @Html.DisplayFor(modelItem => item.Note)
             </td>
             <td>
-                <button hx-get="https://localhost:7234/Reminders/Edit?id=1" hx-target="#editDialog">Edit</button> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                <button hx-get="Reminders/Edit?id=@item.Id" hx-target="#editDialog">Edit</button>
+                <button hx-get="Reminders/Details?id=@item.Id" hx-target="#editDialog">Details</button>
+                <button hx-get="Reminders/Delete?id=@item.Id" hx-target="#editDialog">Delete</button>
             </td>
         </tr>
 }
