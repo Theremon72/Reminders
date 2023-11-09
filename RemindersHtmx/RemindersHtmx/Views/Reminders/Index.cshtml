@@ -1,0 +1,65 @@
+﻿@model IEnumerable<RemindersHtmx.Data.Reminder>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.DateCreated)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DateTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SnoozeInterval)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ReReminderInterval)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DaySchedule)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Note)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateCreated)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SnoozeInterval)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ReReminderInterval)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DaySchedule)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Note)
+            </td>
+            <td>
+                <button hx-get="https://localhost:7234/Reminders/Edit?id=1" hx-target="#editDialog">Edit</button> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

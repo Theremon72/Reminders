@@ -1,0 +1,19 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>
+        <button hx-get="https://localhost:7234/Reminders"
+            hx-target="#remindersTable">
+            View Reminders
+        </button>
+    </p>
+</div>
+
+<div id="remindersTable"></div>
+<div id="editDialog"></div>
+
