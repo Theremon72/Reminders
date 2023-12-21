@@ -8,6 +8,7 @@ namespace Reminders.Controllers
         [HttpGet, Route("")]
         public IActionResult Index()
         {
+            //return View();
             return Request.IsHtmx()
             ? PartialView("Index")
             : View("Index");

@@ -1,3 +1,4 @@
+using Htmx;
 using Microsoft.AspNetCore.Mvc;
 using Reminders.Reminders.Interfaces;
 using Reminders.Reminders.Models;
@@ -6,7 +7,7 @@ namespace Reminders.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class ReminderController : ControllerBase
+    public class ReminderController : Controller
     {
         private readonly ILogger<ReminderController> _logger;
         private readonly IReminderService _reminderService;
@@ -18,29 +19,31 @@ namespace Reminders.Controllers
         }
 
         [HttpPost("CreateReminder")]
-        public ActionResult CreateReminder([FromBody] Reminder reminder)
+        public IActionResult CreateReminder([FromBody] Reminder reminder)
         {
             var result = _reminderService.CreateReminder(reminder);
             return Ok(result);
         }
 
         [HttpGet("GetReminders")]
-        public ActionResult GetReminders()
+        public IActionResult GetReminders()
         {
             var reminders = _reminderService.GetReminders();
 
-            return Ok(reminders);
+            if (!Request.IsHtmx()) return Ok(reminders);
+
+            return View(reminders);
         }
 
         [HttpPost("DeleteReminder")]
-        public ActionResult DeleteReminder([FromBody] int id)
+        public IActionResult DeleteReminder([FromBody] int id)
         {
             var result = _reminderService.DeleteReminder(id);
             return Ok(result);
         }
 
         [HttpPost("UpdateReminder")]
-        public ActionResult UpdateReminder([FromBody] Reminder reminder)
+        public IActionResult UpdateReminder([FromBody] Reminder reminder)
         {
             var result = _reminderService.UpdateReminder(reminder);
             return Ok(result);

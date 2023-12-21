@@ -1,0 +1,29 @@
+﻿@using Reminders.Reminders.Models;
+
+@model IReadOnlyCollection<Reminder>
+
+@{
+    ViewData["Title"] = "GetReminders";
+}
+
+<table>
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Note</th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var reminder in Model)
+    {        
+        <tr>
+                <td>@Html.DisplayFor(modelItem => reminder.Id)</td>
+                <td>@Html.DisplayFor(modelItem => reminder.Date)</td>
+                <td>@Html.DisplayFor(modelItem => reminder.Time)</td>
+                <td>@Html.DisplayFor(modelItem => reminder.Note)</td>
+        </tr>
+    }
+    </tbody>
+</table>
