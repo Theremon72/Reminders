@@ -1,0 +1,34 @@
+﻿@page "/"
+@using Reminders.Data.Models
+
+<PageTitle>Home</PageTitle>
+
+<ReminderCard Reminder=@GetReminder()></ReminderCard>
+
+@code {
+    private Reminder GetReminder()
+    {
+        var reminder = new Reminder
+        {
+            Title = "My Reminder",
+            TimeTriggers = new List<TimeTrigger>()
+        };
+
+        var timeTrigger = new TimeTrigger
+        {
+            ReminderId = reminder.Id,
+            CreationType = Data.Models.enums.CreationType.UserCreated
+        };
+
+        var secondTrigger = new TimeTrigger
+        {
+            ReminderId = reminder.Id,
+            CreationType = Data.Models.enums.CreationType.System
+        };
+
+        reminder.TimeTriggers.Add(timeTrigger);
+        reminder.TimeTriggers.Add(secondTrigger);
+
+        return reminder;
+    }
+}

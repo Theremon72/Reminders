@@ -1,0 +1,20 @@
+﻿@page "/Reminder"
+@using Reminders.Data.Models
+@rendermode InteractiveServer
+
+<MudCard>
+    <MudCardHeader>
+        <CardHeaderContent>
+            <MudText>@Reminder?.Title</MudText>
+            @foreach(var test in Reminder?.TimeTriggers!)
+            {
+                <MudText>@test.CreationType.ToString()</MudText>
+            }
+        </CardHeaderContent>
+    </MudCardHeader>
+</MudCard>
+
+@code {
+    [Parameter]
+    public Reminder? Reminder { get; set; }
+}
