@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Reminders.Data;
 
@@ -11,9 +12,11 @@ using Reminders.Data;
 namespace Reminders.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240528124815_AddedSoftDelete")]
+    partial class AddedSoftDelete
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -258,7 +261,7 @@ namespace Reminders.Migrations
 
                     b.HasIndex("ReminderId");
 
-                    b.ToTable("LocationTrigger", (string)null);
+                    b.ToTable("LocationTrigger");
                 });
 
             modelBuilder.Entity("Reminders.Data.Models.Reminder", b =>
@@ -288,7 +291,7 @@ namespace Reminders.Migrations
 
                     b.HasIndex("IsDeleted");
 
-                    b.ToTable("Reminder", (string)null);
+                    b.ToTable("Reminder");
                 });
 
             modelBuilder.Entity("Reminders.Data.Models.ReminderAudit", b =>
@@ -326,7 +329,7 @@ namespace Reminders.Migrations
 
                     b.HasIndex("ReminderId");
 
-                    b.ToTable("reminderAudits", (string)null);
+                    b.ToTable("reminderAudits");
                 });
 
             modelBuilder.Entity("Reminders.Data.Models.TimeTrigger", b =>
@@ -382,7 +385,7 @@ namespace Reminders.Migrations
 
                     b.HasIndex("ReminderId");
 
-                    b.ToTable("TimeTrigger", (string)null);
+                    b.ToTable("TimeTrigger");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Reminders.Data;
 using Reminders.Data.Models;
@@ -18,9 +19,10 @@ namespace Reminders.Controllers
 
         // GET: api/Reminders
         [HttpGet]
+        [Authorize]
         public async Task<ActionResult<IEnumerable<Reminder>>> GetReminder()
         {
-            return await _context.Reminder.ToListAsync();
+            return await _context.Reminder.Where(r => r.IsDeleted == false).ToListAsync();
         }
 
         // GET: api/Reminders/5

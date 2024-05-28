@@ -7,4 +7,7 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
 {
     public DbSet<Reminder> Reminder { get; set; } = default!;
     public DbSet<ReminderAudit> reminderAudits { get; set; } = default!;
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        => optionsBuilder.AddInterceptors(new SoftDeleteInterceptor());
 }
