@@ -1,0 +1,13 @@
+﻿@using Reminders.Data.Models
+
+<MudCard>
+    <MudCardContent>
+        <MudText>@timeTrigger.DaySchedule?.FirstOrDefault()</MudText>
+            <MudText>@timeTrigger.TimeToTrigger.ToString()</MudText>
+    </MudCardContent>
+</MudCard>
+
+@code {
+    [Parameter]
+    public required TimeTrigger timeTrigger { get; set; }
+}

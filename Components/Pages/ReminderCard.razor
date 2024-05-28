@@ -5,13 +5,22 @@
 <MudCard>
     <MudCardHeader>
         <CardHeaderContent>
-            <MudText>@Reminder?.Title</MudText>
-            @foreach(var test in Reminder?.TimeTriggers!)
-            {
-                <MudText>@test.CreationType.ToString()</MudText>
-            }
+            <MudText Typo="Typo.h2">@Reminder?.Title</MudText>
+                <MudText Typo="Typo.body2">@Reminder?.Note</MudText>
         </CardHeaderContent>
     </MudCardHeader>
+    <MudCardContent>
+        <MudExpansionPanels MultiExpansion="true">
+            <MudExpansionPanel Text="Time Triggers">
+                @foreach (var trigger in Reminder?.TimeTriggers!)
+                {
+                    <TimeTriggerCard timeTrigger="trigger"></TimeTriggerCard>
+                }
+            </MudExpansionPanel>
+            <MudExpansionPanel Text="Location Triggers">
+            </MudExpansionPanel>
+        </MudExpansionPanels>
+    </MudCardContent>
 </MudCard>
 
 @code {
