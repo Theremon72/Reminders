@@ -1,0 +1,14 @@
+﻿@using Reminders.Data.Models
+
+<MudCard>
+    <MudCardContent>
+        <DayScheduleChipset Days="@TimeTrigger.DaySchedule"></DayScheduleChipset>
+        <MudText>@TimeTrigger.TimeToTrigger.ToString()</MudText>
+        <MudText>@TimeTrigger.SnoozeInterval.ToString()</MudText>
+    </MudCardContent>
+</MudCard>
+
+@code {
+    [Parameter]
+    public required TimeTrigger TimeTrigger { get; set; }
+}

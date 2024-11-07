@@ -1,0 +1,25 @@
+﻿<MudChipSet @bind-SelectedChips="_selected" MultiSelection="true">
+    <MudChip Text="Monday" Default="@Days?.Contains(DayOfWeek.Monday)" OnClick="() => UpdateDays(DayOfWeek.Monday)" Color="Color.Primary"></MudChip>
+    <MudChip Text="Tuesday" Default="@Days?.Contains(DayOfWeek.Tuesday)" OnClick="() => UpdateDays(DayOfWeek.Tuesday)" Color="Color.Primary"></MudChip>
+    <MudChip Text="Wednesday" Default="@Days?.Contains(DayOfWeek.Wednesday)" OnClick="() => UpdateDays(DayOfWeek.Wednesday)" Color="Color.Primary"></MudChip>
+    <MudChip Text="Thursday" Default="@Days?.Contains(DayOfWeek.Thursday)" OnClick="() => UpdateDays(DayOfWeek.Thursday)" Color="Color.Primary"></MudChip>
+    <MudChip Text="Friday" Default="@Days?.Contains(DayOfWeek.Friday)" OnClick="() => UpdateDays(DayOfWeek.Friday)" Color="Color.Primary"></MudChip>
+    <MudChip Text="Saturday" Default="@Days?.Contains(DayOfWeek.Saturday)" OnClick="() => UpdateDays(DayOfWeek.Saturday)" Color="Color.Primary"></MudChip>
+    <MudChip Text="Sunday" Default="@Days?.Contains(DayOfWeek.Sunday)" OnClick="() => UpdateDays(DayOfWeek.Sunday)" Color="Color.Primary"></MudChip>
+</MudChipSet>
+
+@code {
+    [Parameter]
+    public ICollection<DayOfWeek>? Days { get; set; }
+
+    private MudChip[]? _selected;
+
+    private void UpdateDays(DayOfWeek day)
+    {
+        if (Days == null) Days = new List<DayOfWeek>();
+        if (Days.Contains(day))
+            Days.Remove(day);
+        else
+            Days.Add(day);
+    }
+}
