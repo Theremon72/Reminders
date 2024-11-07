@@ -8,28 +8,21 @@ namespace Reminders.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class RemindersController : ControllerBase
+    public class RemindersController(ApplicationDbContext context) : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
-
-        public RemindersController(ApplicationDbContext context)
-        {
-            _context = context;
-        }
-
         // GET: api/Reminders
         [HttpGet]
         [Authorize]
         public async Task<ActionResult<IEnumerable<Reminder>>> GetReminder()
         {
-            return await _context.Reminder.Where(r => r.IsDeleted == false).ToListAsync();
+            return await context.Reminder.Where(r => r.IsDeleted == false).ToListAsync();
         }
 
         // GET: api/Reminders/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Reminder>> GetReminder(long id)
         {
-            var reminder = await _context.Reminder.FindAsync(id);
+            var reminder = await context.Reminder.FindAsync(id);
 
             if (reminder == null)
             {
@@ -49,11 +42,11 @@ namespace Reminders.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(reminder).State = EntityState.Modified;
+            context.Entry(reminder).State = EntityState.Modified;
 
             try
             {
-                await _context.SaveChangesAsync();
+                await context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -75,8 +68,8 @@ namespace Reminders.Controllers
         [HttpPost]
         public async Task<ActionResult<Reminder>> PostReminder(Reminder reminder)
         {
-            _context.Reminder.Add(reminder);
-            await _context.SaveChangesAsync();
+            context.Reminder.Add(reminder);
+            await context.SaveChangesAsync();
 
             return CreatedAtAction("GetReminder", new { id = reminder.Id }, reminder);
         }
@@ -85,21 +78,21 @@ namespace Reminders.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteReminder(long id)
         {
-            var reminder = await _context.Reminder.FindAsync(id);
+            var reminder = await context.Reminder.FindAsync(id);
             if (reminder == null)
             {
                 return NotFound();
             }
 
-            _context.Reminder.Remove(reminder);
-            await _context.SaveChangesAsync();
+            context.Reminder.Remove(reminder);
+            await context.SaveChangesAsync();
 
             return NoContent();
         }
 
         private bool ReminderExists(long id)
         {
-            return _context.Reminder.Any(e => e.Id == id);
+            return context.Reminder.Any(e => e.Id == id);
         }
     }
 }

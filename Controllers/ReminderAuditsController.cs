@@ -20,14 +20,14 @@ namespace Reminders.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ReminderAudit>>> GetreminderAudits()
         {
-            return await _context.reminderAudits.ToListAsync();
+            return await _context.ReminderAudits.ToListAsync();
         }
 
         // GET: api/ReminderAudits/5
         [HttpGet("{id}")]
         public async Task<ActionResult<ReminderAudit>> GetReminderAudit(long id)
         {
-            var reminderAudit = await _context.reminderAudits.FindAsync(id);
+            var reminderAudit = await _context.ReminderAudits.FindAsync(id);
 
             if (reminderAudit == null)
             {
@@ -73,7 +73,7 @@ namespace Reminders.Controllers
         [HttpPost]
         public async Task<ActionResult<ReminderAudit>> PostReminderAudit(ReminderAudit reminderAudit)
         {
-            _context.reminderAudits.Add(reminderAudit);
+            _context.ReminderAudits.Add(reminderAudit);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetReminderAudit", new { id = reminderAudit.Id }, reminderAudit);
@@ -83,13 +83,13 @@ namespace Reminders.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteReminderAudit(long id)
         {
-            var reminderAudit = await _context.reminderAudits.FindAsync(id);
+            var reminderAudit = await _context.ReminderAudits.FindAsync(id);
             if (reminderAudit == null)
             {
                 return NotFound();
             }
 
-            _context.reminderAudits.Remove(reminderAudit);
+            _context.ReminderAudits.Remove(reminderAudit);
             await _context.SaveChangesAsync();
 
             return NoContent();
@@ -97,7 +97,7 @@ namespace Reminders.Controllers
 
         private bool ReminderAuditExists(long id)
         {
-            return _context.reminderAudits.Any(e => e.Id == id);
+            return _context.ReminderAudits.Any(e => e.Id == id);
         }
     }
 }

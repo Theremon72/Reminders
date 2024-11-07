@@ -5,7 +5,7 @@
 /// </summary>
 public class Reminder : Entity
 {
-    public long Id { get; set; }
+    public long Id { get; init; }
 
     /// <summary>
     /// Tag to display/insist that this reminder should not be snoozed or delayed
@@ -15,16 +15,16 @@ public class Reminder : Entity
     /// <summary>
     /// Any extra notes beyond the title to display
     /// </summary>
-    public string? Note { get; set; }
-    public string? Title { get; set; }
+    public string Note { get; set; } = String.Empty;
+    public string Title { get; set; } = String.Empty;
 
     /// <summary>
     /// A collection of <see cref="TimeTrigger"/>s
     /// </summary>
-    public ICollection<TimeTrigger>? TimeTriggers { get; set; }
+    public ICollection<TimeTrigger> TimeTriggers { get; set; } = new List<TimeTrigger>();
 
     /// <summary>
     /// A collection of <see cref="LocationTrigger"/>
     /// </summary>
-    public ICollection<LocationTrigger>? LocationTriggers { get; set; }
+    public ICollection<LocationTrigger> LocationTriggers { get; set; } = new List<LocationTrigger>();
 }

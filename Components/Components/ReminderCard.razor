@@ -1,29 +1,64 @@
 ﻿@page "/Reminder"
+@using Microsoft.IdentityModel.Tokens
+@using Reminders.Data
 @using Reminders.Data.Models
+@inject ApplicationDbContext DbContext
 @rendermode InteractiveServer
 
 <MudCard>
     <MudCardHeader>
         <CardHeaderContent>
-            <MudText Typo="Typo.h2">@Reminder?.Title</MudText>
-                <MudText Typo="Typo.body2">@Reminder?.Note</MudText>
+            <MudTextField T="string" Typo="Typo.h2" @bind-Value="@Reminder.Title" OnKeyDown="Editing" />
+            <MudTextField T="string" Typo="Typo.body2" @bind-Value="@Reminder.Note" OnKeyDown="Editing" />
         </CardHeaderContent>
     </MudCardHeader>
     <MudCardContent>
         <MudExpansionPanels MultiExpansion="true">
-            <MudExpansionPanel Text="Time Triggers">
-                @foreach (var trigger in Reminder?.TimeTriggers!)
-                {
-                    <TimeTriggerCard TimeTrigger="trigger"></TimeTriggerCard>
-                }
-            </MudExpansionPanel>
-            <MudExpansionPanel Text="Location Triggers">
-            </MudExpansionPanel>
+            @if (!Reminder.TimeTriggers.IsNullOrEmpty())
+            {
+                <MudExpansionPanel Text="Time Triggers">
+                    @foreach (var trigger in Reminder.TimeTriggers)
+                    {
+                        <TimeTriggerCard TimeTrigger="trigger"></TimeTriggerCard>
+                    }
+                </MudExpansionPanel>
+            }
+            @if (!Reminder.LocationTriggers.IsNullOrEmpty())
+            {
+                <MudExpansionPanel Text="Location Triggers">
+                </MudExpansionPanel>
+            }
         </MudExpansionPanels>
     </MudCardContent>
+    <MudCardActions>
+            <MudIconButton Icon="@Icons.Material.Filled.Save" Color="Color.Primary" OnClick="Save" Disabled="_saveDisabled"></MudIconButton>
+    </MudCardActions>
 </MudCard>
 
 @code {
     [Parameter]
-    public Reminder? Reminder { get; set; }
+    public required Reminder Reminder { get; set; }
+
+    private bool _saveDisabled = true;
+    
+    protected override void OnInitialized()
+    {
+        if (Reminder.Id == 0)
+        {
+            _saveDisabled = false;
+        }
+    }
+
+    private void Save()
+    {
+        if (Reminder.Id == 0)
+            DbContext.Reminder.Add(Reminder);
+        DbContext.SaveChangesAsync();
+    }
+
+    private void Editing()
+    {
+        _saveDisabled = false;
+    }
+
 }

@@ -28,7 +28,7 @@ public class TimeTrigger : Entity
     /// <summary>
     /// Collection of Days to fire the trigger 
     /// </summary>
-    public ICollection<DayOfWeek>? DaySchedule { get; set; }
+    public IList<DayOfWeek>? DaySchedule { get; set; }
 
     /// <summary>
     /// Time interval in seconds when snoozing

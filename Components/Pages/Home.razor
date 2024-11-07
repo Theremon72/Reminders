@@ -1,35 +1,43 @@
-﻿@page "/"
+﻿@rendermode InteractiveServer
+@page "/"
+@inject ApplicationDbContext DbContext
+@using Microsoft.EntityFrameworkCore
 @using Reminders.Data.Models
 @using Reminders.Components.Components
+@using Reminders.Data
 
 <PageTitle>Home</PageTitle>
 
-<ReminderCard Reminder=@GetReminder()></ReminderCard>
+@foreach (var reminder in _reminders)
+{
+    <ReminderCard Reminder=reminder></ReminderCard>
+}
+
+<MudIconButton Icon="@Icons.Material.Filled.Add" Color="Color.Primary" aria-label="Add new reminder" Size="Size.Large" OnClick="CreateNew" />
 
 @code {
-    private Reminder GetReminder()
+    private List<Reminder> _reminders = [];
+
+    protected override void OnInitialized()
+    {
+        _reminders = DbContext.Reminder.Include(x => x.TimeTriggers).ToList();
+    }
+
+    private void CreateNew()
     {
         var reminder = new Reminder
         {
             Title = "My Reminder",
             TimeTriggers = new List<TimeTrigger>()
         };
-
+        
         var timeTrigger = new TimeTrigger
         {
-            ReminderId = reminder.Id,
             CreationType = Data.Models.enums.CreationType.UserCreated
         };
-
-        var secondTrigger = new TimeTrigger
-        {
-            ReminderId = reminder.Id,
-            CreationType = Data.Models.enums.CreationType.System
-        };
-
+        
         reminder.TimeTriggers.Add(timeTrigger);
-        reminder.TimeTriggers.Add(secondTrigger);
 
-        return reminder;
+        _reminders.Add(reminder);
     }
 }
